@@ -3,7 +3,7 @@ name: Node JS CI/CD Pipeline
 on:
   push:
     branches:
-      -master
+      - master
 
 jobs:
   build_nodejs_app:
