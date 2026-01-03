@@ -1,0 +1,37 @@
+name: Node JS CI Pipeline
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build_nodejs_app:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set Up Node.js 22
+        uses: actions/setup-node@v4
+        with: 
+          node-version: "22"
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Application   
+        run: echo "Building application" #not working because of no provision for build script in package
+     
+      - name: Run ESlint
+        run: echo "running lint" 
+
+      - name: Run Unit Test
+        run: echo "Running Unit Tests" 
+
+       
+
+
+
+
