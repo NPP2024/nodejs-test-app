@@ -48,3 +48,21 @@ jobs:
         
       - name: Push Docker Image to Docker Hub
         run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/my-nodejs-app:latest
+        #Deploy to the server
+      - name:  Add SSH key
+        run: |
+          mkdir -p ~/ .ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod  400 ~/.ssh/id_rsa
+
+      - name: Add Known hosts
+        run: ssh-keyscan - t rsa ${{ secrets.SERVER_IP }}   >>  ~/.ssh/known_hosts
+
+      - name: Deploy To Production Server
+        run: |
+          ssh -o StrictHostsKeyChecking=no ubuntu@${{ secrets.SERVER_IP }}  <<  `EOF`
+          sudo docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/my-nodejs-app:latest
+          #sudo docker stop my-nodejs-app || true
+          #sudo docker run my-nodejs-app || true
+          sudo docker run -d -p 80:3000 ${{ secrets.DOCKER_HUB_USERNAME }}/my-nodejs-app:latest
+          EOF
