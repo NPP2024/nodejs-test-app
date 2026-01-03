@@ -35,7 +35,7 @@ jobs:
         uses: docker/setup-buildx-action@v2
         
       - name: Build Docker Image
-        run: docker built -t my-nodejs-app .
+        run: docker build -t my-nodejs-app .
 
       - name: Tag Docker Images
         run: docker tag my-nodejs-app:latest  ${{ secrets.DOCKER_HUB_USERNAME }}/my-nodejs-app:latest
