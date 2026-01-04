@@ -60,7 +60,7 @@ jobs:
 
       - name: Deploy To Production Server
         run: |
-          ssh -o StrictHostsKeyChecking=no ubuntu@${{ secrets.SERVER_IP }} << `EOF`
+          ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.SERVER_IP }} << 'EOF'
           sudo docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/my-nodejs-app:latest
           #sudo docker stop my-nodejs-app || true
           #sudo docker run my-nodejs-app || true
